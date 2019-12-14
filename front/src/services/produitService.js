@@ -9,6 +9,7 @@ export default {
     let res = await axios.get(Constants.API_ENDPOINT + 'produit');
     return res.data;
   },
+
   /*
   Enregistrer un produit
   */
@@ -24,8 +25,8 @@ export default {
   /*
   Modifier un produit
   */
-  modifierProduit: async (produit) => {
-    let res = await axios.put(Constants.API_ENDPOINT +'produit/' + produit.id,{
+  modifierProduit: async (produit,id) => {
+    let res = await axios.put(Constants.API_ENDPOINT +'produit/' + id,{
       nom: produit.nom,
       description: produit.description,
       prix: produit.prix,
