@@ -1,24 +1,9 @@
 import React from "react";
-import produitService from "./services/produitService";
+import ProduitService from "../services/ProduitService";
 import { Button, Row, Col, Form, Table, Alert, ButtonGroup, Card } from 'react-bootstrap';
 
-const style = {
-    app: {
-        backgroundColor: '#fafafa',
-        paddingTop: 50,
-        paddingLeft: 100,
-        paddingRight: 100
-    },
-    formClass: {
-        marginBottom: 20,
-        paddingRight: 200
-    },
-    buttonForm: {
-        margin: 5
-    }
-}
 
-class App extends React.Component {
+class ProduitsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,7 +34,7 @@ class App extends React.Component {
             "prix": this.state.prixProduit,
             "quantite": this.state.quantiteProduit
         }
-        produitService.modifierProduit(body, this.state.idProduitPourModifier).then((valeur) => {
+        ProduitService.modifierProduit(body, this.state.idProduitPourModifier).then((valeur) => {
             //mettre à jour la liste
             this.alimenterListeProduits();
             //affichage message confirmation
@@ -62,14 +47,14 @@ class App extends React.Component {
 
     //appel service pour stocker un produit
     enregistrerProduit() {
-        if (this.state.nomProduit != "" && this.state.descProduit != "" && this.state.prixProduit > 0) {
+        if (this.state.nomProduit !== "" && this.state.descProduit !== "" && this.state.prixProduit > 0) {
             let body = {
                 "nom": this.state.nomProduit,
                 "description": this.state.descProduit,
                 "prix": this.state.prixProduit,
                 "quantite": this.state.quantiteProduit
             }
-            produitService.enregistrerProduit(body).then(() => {
+            ProduitService.enregistrerProduit(body).then(() => {
                 //mettre à jour la liste
                 this.alimenterListeProduits();
                 //affichage message confirmation
@@ -85,14 +70,14 @@ class App extends React.Component {
 
     //appel service pour recuperer tous les produits
     alimenterListeProduits() {
-        produitService.recupererTousProduits().then((valeur) => {
+        ProduitService.recupererTousProduits().then((valeur) => {
             this.setState({ products: valeur });
         });
     }
 
     //appel service pour supprimer un produit
     supprimerUnProduit(id) {
-        produitService.supprimerProduitParId(id).then(() => {
+        ProduitService.supprimerProduitParId(id).then(() => {
             this.alimenterListeProduits();
         });
     }
@@ -135,9 +120,8 @@ class App extends React.Component {
             quantiteProduit: 1,
             showButtonModifier: false,
             messageErreur: null,
-            showError: false,
-            messageErreur: null
-        })
+            showError: false
+                })
     }
 
 
@@ -164,12 +148,12 @@ class App extends React.Component {
         return (
             <div style={style.app}>
 
-                {this.state.showConfirm == true &&
+                {this.state.showConfirm === true &&
                     <Alert variant="success" onClose={() => this.setShowConfirmation(false)} dismissible>
                         {this.state.messageSucces}
                     </Alert>
                 }
-                {this.state.showError == true &&
+                {this.state.showError === true &&
                     <Alert variant="danger" onClose={() => this.setShowErreur(false)} dismissible>
                         {this.state.messageErreur}
                     </Alert>
@@ -223,7 +207,7 @@ class App extends React.Component {
                             </Row>
                             <Row style={{ marginTop: 10 }}>
                                 <Col>
-                                    {(this.state.showButtonModifier == true) ? (
+                                    {(this.state.showButtonModifier === true) ? (
                                         <Button style={style.buttonForm} variant="warning" onClick={() => this.modifierProduit()}>Modifier</Button>
 
                                     ) : (
@@ -272,4 +256,20 @@ class App extends React.Component {
     }
 }
 
-export default App
+
+const style = {
+    app: {
+        backgroundColor: '#fafafa',
+        paddingTop: 50,
+        paddingLeft: 100,
+        paddingRight: 100
+    },
+    formClass: {
+        marginBottom: 20,
+        paddingRight: 200
+    },
+    buttonForm: {
+        margin: 5
+    }
+}
+export default ProduitsPage
