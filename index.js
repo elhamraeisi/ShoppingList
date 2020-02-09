@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 var cors = require('cors')
 require('./models/Produit');
 require('./models/Utilisateur');
+require('./models/Annonce');
 
 
 const MONGODB_URL= 'mongodb://localhost:27017/shopping-list'
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 //importation des routes
 require('./routes/produitRoutes')(app);
 require('./routes/utilisateurRoutes')(app);
+require('./routes/annonceRoutes')(app);
 
 //demarrage du serveur
 app.listen(PORT, () => {

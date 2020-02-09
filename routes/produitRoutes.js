@@ -7,9 +7,19 @@ module.exports = (app) => {
   Route pour recuperer tous les produits
   */
   app.get('/api/produit', async (req, res) => {
-    let produits = await Produit.find();
+    let produits = await Produit.find().sort('prix').select('prix quantite')
+    ;
     return res.status(200).send(produits);
   })
+  
+   /*
+  Route pour montrer la date d'aujourd'hui
+  */
+ app.get('/api/date', async (req, res) => {
+  let date = new Date();
+  return res.status(200).send(date);
+}) 
+
 
   /*
   Route pour enregistrer un produit
