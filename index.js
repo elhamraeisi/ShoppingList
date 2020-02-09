@@ -5,6 +5,9 @@ var cors = require('cors')
 require('./models/Produit');
 require('./models/Utilisateur');
 require('./models/Annonce');
+require('./models/Evenement');
+
+
 
 
 const MONGODB_URL= 'mongodb://localhost:27017/shopping-list'
@@ -23,6 +26,9 @@ app.use(bodyParser.json());
 require('./routes/produitRoutes')(app);
 require('./routes/utilisateurRoutes')(app);
 require('./routes/annonceRoutes')(app);
+require('./routes/evenementRoutes')(app);
+
+
 
 //demarrage du serveur
 app.listen(PORT, () => {
